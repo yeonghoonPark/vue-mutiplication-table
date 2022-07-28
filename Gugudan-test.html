@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #app {
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        img{
+            width: 100%;
+            vertical-align: top;
+        }
+        .img-box {
+            width: 200px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1 style="padding: 1rem 0;">Let the game begin...</h1>
+        <div class="img-box" style="padding: 1rem 0;">
+            <img src="./images/jigsaw.png" alt="jigsaw">
+        </div>
+        <span style="font-size: 2rem; padding: 1rem 0;">{{first}} X {{second}} = ?</span>
+        <form v-on:submit="onSubmitForm" style="padding: 1rem 0;">
+            <input type="number" v-model="value" placeholder="Give me a answer" ref="answer">
+            <button type="submit">Submit</button>
+        </form>
+        <div style="padding: 1rem 0;">{{result}}</div>
+    </div>
+
+
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data: {
+                first: Math.ceil(Math.random() * 10),
+                second: Math.ceil(Math.random() * 10),
+                value: "",
+                result: "Prove that u're not a fool. 🐣"
+            },
+            methods: {
+                onSubmitForm(event) {
+                    event.preventDefault();
+                    if (this.first * this.second === parseInt(this.value)) {
+                        this.result = "Correct!! that's my boy 😀";
+                        this.first = Math.ceil(Math.random() * 10);
+                        this.second = Math.ceil(Math.random() * 10);
+                        this.value = "";
+                        this.$refs.answer.focus();
+                    } else {
+                        this.result = "Wrong!! a u out of mind, human? 😡";
+                        this.value = "";
+                        this.$refs.answer.focus();
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
